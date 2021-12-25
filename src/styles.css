@@ -1,0 +1,57 @@
+:root {
+  --dark-gray:#110C18;
+  --light-gray: #F8F9FA;
+  --gold: #B68752;
+  --dark-blue: #012F81;
+}
+
+html,
+body {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  font-size: 1rem;
+  background: var(--light-gray);
+  color: var(--dark-gray);
+}
+
+header {
+  margin: 0 auto;
+  max-width: 940px;
+  display: flex;
+  align-items: center;
+}
+
+header h1 {
+  font-weight: normal;
+}
+
+header h1 strong {
+  display: block;
+  font-weight: 700;
+}
+
+#books {
+  margin: 0 auto;
+  max-width: 940px;
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 20px));
+}
+
+.book {
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: var(--dark-blue);
+  font-size: 1.5rem;
+  border-radius: 10px;
+  height: 300px;
+  text-decoration: none;
+}
+
+.book h2 {
+  font-family: 'Lora', serif;
+  color: var(--gold);
+}
