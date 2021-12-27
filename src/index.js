@@ -401,46 +401,44 @@ const books = [
 
 window.addEventListener('DOMContentLoaded', () => {
   const booksContainer = document.getElementById("books");
-  // 86400000 = 1 day
 
-  if (!cookieExists('hasVisitedToday')) {
+  if(cookieExists('books')) {
+    const cachedBooks = getCookieValue('books').split(',');
+    renderChapters(cachedBooks);
+  } else {
+    const selectedBooks = [];
     const date = new Date();
     date.setTime(parseInt(date.getTime()) + 86400000);
-    document.cookie = `hasVisitedToday=true; expires=${date.toUTCString()}`;
-
-    if (!sessionStorage.getItem('books')) {
-      const selectedBooks = [];
-      for (let i = 1; i <= 6; i++) {
+    for (let i = 1; i <= 6; i++) {
         const bookNumber = Math.floor(Math.random() * books.length);
         if (typeof books[bookNumber] !== 'undefined') {
-          const bookData = books[bookNumber];
-          const chapter = Math.floor(Math.random() * bookData.chapters) + 1;
-          const chapterName = `${bookData.name} ${chapter}`;
+            const bookData = books[bookNumber];
+            const chapter = Math.floor(Math.random() * bookData.chapters) + 1;
+            const chapterName = `${bookData.name} ${chapter}`;
 
-          selectedBooks.push(chapterName);
+            selectedBooks.push(chapterName);
 
-          if (i === 6) {
-            sessionStorage.setItem('books', selectedBooks);
-          }
+            if (i === 6) {
+                document.cookie = `books=${selectedBooks}; expires=${date.toString()}`;
+                renderChapters(getCookieValue('books').split(','));
+            }
         }
-      }
-    }
-  };
-
-  if (sessionStorage.getItem('books')) {
-    const cachedBooks = sessionStorage.getItem('books').split(',');
-
-    if(Array.isArray(cachedBooks) && cachedBooks.length > 0) {
-      cachedBooks.map(book => {
-        const bookElement = document.createElement('a');
-        bookElement.setAttribute("href", encodeURI(`https://www.biblegateway.com/passage/?search=${book}&version=NIV`));
-        bookElement.setAttribute("target", "_blank");
-        bookElement.classList.add("book");
-        bookElement.innerHTML = `<h2>${book}</h2>`;
-        booksContainer.appendChild(bookElement);
-      });
     }
   }
+
+
+  function renderChapters(chapters = []) {
+    if(Array.isArray(chapters) && chapters.length > 0) {
+        chapters.map(book => {
+          const bookElement = document.createElement('a');
+          bookElement.setAttribute("href", encodeURI(`https://www.biblegateway.com/passage/?search=${book}&version=NIV`));
+          bookElement.setAttribute("target", "_blank");
+          bookElement.classList.add("book");
+          bookElement.innerHTML = `<h2>${book}</h2>`;
+          booksContainer.appendChild(bookElement);
+        });
+    }
+  };
 
   function cookieExists(name) {
     var match = document.cookie.match(RegExp('(?:^|;\\s*)' + name + '=([^;]*)')); 

@@ -1,7 +1,7 @@
 :root {
   --dark-gray:#110C18;
   --light-gray: #F8F9FA;
-  --gold: #B68752;
+  --gold: #c9955b;
   --dark-blue: #012F81;
 }
 
@@ -19,6 +19,7 @@ header {
   max-width: 940px;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 header h1 {
@@ -36,6 +37,7 @@ header h1 strong {
   display: grid;
   grid-gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(250px, 20px));
+  justify-content: center;
 }
 
 .book {
